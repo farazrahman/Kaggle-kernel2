@@ -40,11 +40,8 @@ flavors_of_cacao$Cocoa_percent <- as.numeric(flavors_of_cacao$Cocoa_percent)
 
 
 #Missingness
-flavors_of_cacao$Bean_type[flavors_of_cacao$Bean_type=="Â"] <- "NA"
-flavors_of_cacao$Broad_origin[flavors_of_cacao$Broad_origin=="Â"] <- "NA"
 
-flavors_of_cacao[] <- lapply(flavors_of_cacao, str_trim)
-is.na(flavors_of_cacao) <- flavors_of_cacao==''
+flavors_of_cacao[which(flavors_of_cacao == "" | flavors_of_cacao == " ")] <- "NA"
 
 colMeans(is.na(flavors_of_cacao))
 
@@ -157,4 +154,5 @@ flavors_of_cacao %>% group_by(Review_date) %>% summarise(Count= n())%>%
  ggplot(flavors_of_cacao ,aes(x =Cocoa.pct, y = Rating_grp, fill = Rating)) + geom_tile() + 
    theme(axis.text.x = element_text(angle = 45, vjust = 0.8, hjust=1)) 
 
- 
+ #Rating is definitely not good when 100 percent cocoa is used in a bar
+ #70-79% of cocoa in chocolate has excellent ratings
